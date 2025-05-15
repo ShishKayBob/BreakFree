@@ -28,6 +28,9 @@ export const BreakFreeTheme = definePreset(Aura, {
             800: '#1B1835',
             900: '#14132A',
             950: '#0D0D1F',
+        },
+        accent: {
+            500: '#F45B69'
         }
     },
     colorScheme: {

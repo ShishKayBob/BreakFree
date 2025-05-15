@@ -1,0 +1,14 @@
+.header {
+    font-family: "Poppins";
+    font-size: 72pt;
+    color: var(--p-primary-500);
+    margin: 1rem;
+    text-align: center;
+    letter-spacing: 2px;
+}
+
+@media (max-width: 1100px) {
+    .header {
+        font-size: 42pt;
+    }
+}
