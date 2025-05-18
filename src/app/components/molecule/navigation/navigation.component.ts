@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { MenubarModule } from 'primeng/menubar';
 import { MenuItem } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'navigation',
-  imports: [MenubarModule],
+  imports: [MenubarModule, ButtonModule],
   templateUrl: './navigation.component.html',
   styleUrl: './navigation.component.scss'
 })
