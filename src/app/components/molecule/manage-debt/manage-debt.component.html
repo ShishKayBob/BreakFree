@@ -1,5 +1,29 @@
 <p-card>
-    <p-table>
-        
-    </p-table>
+    <p-button label="Add Debt" icon="pi pi-plus" (onClick)="addDebt()"/>
+    <p-table [value]="debts" >
+    <ng-template #header>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Initial</th>
+            <th>Current</th>
+            <th>Estimated Minimum</th>
+            <th></th>
+        </tr>
+    </ng-template>
+    <ng-template #body let-debt>
+        <tr>
+            <td>{{ debt.name }}</td>
+            <td>{{ debt.type }}</td>
+            <td>{{ debt.initialBalance }}</td>
+            <td>{{ debt.currentBalance }}</td>
+            <td>{{ debt.estMinPayment }}</td>
+            <td>
+                <p-button icon="pi pi-check"></p-button>
+                <p-button icon="pi pi-pencil"></p-button>
+                <p-button icon="pi pi-trash"></p-button>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
 </p-card>
