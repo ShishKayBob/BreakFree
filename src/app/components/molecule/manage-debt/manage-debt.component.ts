@@ -14,6 +14,7 @@ import { Dialog } from 'primeng/dialog';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { FloatLabelModule } from 'primeng/floatlabel';
+import DebtInfo from '../../../types/debtInfo';
 
 @Component({
   selector: 'manage-debt',
@@ -51,12 +52,10 @@ export class ManageDebtComponent {
     private formBuilder: FormBuilder
   ) { }
 
-  ngOnInit() {
-    this.debtService.load(); 
-    
+  ngOnInit() {    
     this.debtServiceSubscription = this.debtService.$debtService
-      .subscribe((value: Debt[]) => {
-        this.debts = value;
+      .subscribe((value: DebtInfo) => {
+        this.debts = [...value.debts];
       });
 
     this.newDebtForm = this.formBuilder.group({

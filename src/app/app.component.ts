@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { NavigationComponent } from './components/molecule/navigation/navigation.component';
+import { LocalStorageService } from './services/local-storage.service';
 
 @Component({
   selector: 'app-root',
@@ -9,5 +10,12 @@ import { NavigationComponent } from './components/molecule/navigation/navigation
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = 'breakfree';
+
+  constructor(public localStorageService: LocalStorageService) {
+
+  }
+
+  ngOnInit() {
+    this.localStorageService.restoreData('breakfree-data');
+  }
 }

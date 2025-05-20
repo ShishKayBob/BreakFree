@@ -1,0 +1,21 @@
+.radio-label {
+    padding-left: 0.5rem;
+    padding-right: 0.15rem;
+}
+
+.radioRow {
+    margin: 2rem;
+    display: flex;
+    align-items: center;
+    p-button-sm.p-button-icon-only.p-button-rounded {
+        justify-self: flex-end;
+    }
+}
+
+.endRow {
+    margin-top: 1rem;
+    display:flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: .5rem;
+}

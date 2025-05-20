@@ -1,5 +1,5 @@
 <p-card header="Debt Overview" subheader="All of your debt in a managable list. Add, Remove, Edit, and Sort your debts for easy viewing.">
-    <p-table [value]="debts">
+    <p-table [value]="debts" [paginator]="true" [rows]="5">
         <ng-template #header>
             <tr>
                 <th>Name</th>

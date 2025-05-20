@@ -1,1 +1,83 @@
-<p>debt-strategy works!</p>
+<p-card header="Debt Strategy" subheader="To tackle your debt, you'll need a plan.">
+    <div *ngIf="!editForm">
+        <p *ngIf="!debtStrategyForm.value.selectedStrategy">Our records show you haven't chosen a payment strategy! Here
+            is some information about the kinds of methods
+            we support:</p>
+        <p *ngIf="debtStrategyForm.value.selectedStrategy">Our records show you have chosen
+            {{debtStrategyForm.value.selectedStrategy}} as a payment strategy!</p>
+        <p-accordion value="">
+            <p-accordion-panel value="0">
+                <p-accordion-header>Snowball</p-accordion-header>
+                <p-accordion-content>
+                    <p> The Snowball method is where you will start with the debt with the lowest balance, pay off
+                        smaller
+                        debts faster, and roll the savings into paying off your next debt sooner. For a lot of people
+                        this
+                        helps them by allowing them to have more early wins to keep feeling good while resolving their
+                        debt.
+                        A con is that your high balances may cost more in interest payments where as avalanche will help
+                        you
+                        save money.
+                    </p>
+                </p-accordion-content>
+            </p-accordion-panel>
+            <p-accordion-panel value="1">
+                <p-accordion-header>Avalanche</p-accordion-header>
+                <p-accordion-content>
+                    <p>
+                        The Avalanche method is where you start with your highest APR debt to pay off first. This way
+                        you
+                        will pay the least amount of interest while repaying your debts. Its usually a little faster
+                        overall
+                        than snowball (but not always) since it guarentees you pay the least amount of interest lowering
+                        your total debt a bit faster. However if
+                        you have larger debts this may not offer the early celebrations that snowball can.
+                    </p>
+                </p-accordion-content>
+            </p-accordion-panel>
+            <p-accordion-panel value="2">
+                <p-accordion-header>Custom</p-accordion-header>
+                <p-accordion-content>
+                    <p>
+                        Sometimes you just know what order is best for you. Maybe you'd like to close an account or
+                        maybe
+                        you're just TIRED of an old debt. No problem! We'll provide a way for you to customize your own
+                        order.
+                    </p>
+                </p-accordion-content>
+            </p-accordion-panel>
+        </p-accordion>
+        <br />
+        <p-button [text]="true" (click)="editForm = true">Choose Your Strategy</p-button>
+    </div>
+    <form *ngIf="editForm" [formGroup]="debtStrategyForm" (submit)="onSubmit()">
+        <div *ngFor="let strategy of strategies" class="radioRow">
+            <p-radiobutton [inputId]="strategy" [value]="strategy" formControlName="selectedStrategy" size="large" />
+            <label class="radio-label" [for]="strategy">{{strategy}}</label>
+            <p-button icon="pi pi-question" [rounded]="true" [text]="true" size="small"></p-button>
+        </div>
+        <p-table *ngIf="debtStrategyForm.value.selectedStrategy === 'Custom'" [reorderableColumns]="true"
+            (onRowReorder)="onRowReorder($event)" [value]="debts">
+            <ng-template #header>
+                <tr>
+                    <th></th>
+                    <th>Name</th>
+                    <th>Balance</th>
+                </tr>
+            </ng-template>
+            <ng-template #body let-debt let-index="rowIndex">
+                <tr [pReorderableRow]="index">
+                    <td>
+                        <span class="pi pi-bars" pReorderableRowHandle></span>
+                    </td>
+                    <td>{{ debt.name }}</td>
+                    <td>{{ debt.currentBalance }}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+        <div class="endRow">
+            <p-button label="Cancel" severity="secondary" (click)="editForm = false" />
+            <p-button type="submit">Submit</p-button>
+        </div>
+    </form>
+</p-card>
