@@ -1,10 +1,11 @@
 <p-card header="Debt Strategy" subheader="To tackle your debt, you'll need a plan.">
     <div *ngIf="!editForm">
-        <p *ngIf="!debtStrategyForm.value.selectedStrategy">Our records show you haven't chosen a payment strategy! Here
+        <p *ngIf="!debtStrategy.selectedStrategy">Our records show you haven't chosen a payment strategy! Here
             is some information about the kinds of methods
             we support:</p>
-        <p *ngIf="debtStrategyForm.value.selectedStrategy">Our records show you have chosen
-            {{debtStrategyForm.value.selectedStrategy}} as a payment strategy!</p>
+        <p *ngIf="debtStrategy.selectedStrategy">Our records show you have chosen
+            {{debtStrategy.selectedStrategy}} as a payment strategy!     
+        </p>
         <p-accordion value="">
             <p-accordion-panel value="0">
                 <p-accordion-header>Snowball</p-accordion-header>
@@ -50,13 +51,13 @@
         <br />
         <p-button [text]="true" (click)="editForm = true">Choose Your Strategy</p-button>
     </div>
-    <form *ngIf="editForm" [formGroup]="debtStrategyForm" (submit)="onSubmit()">
+    <div *ngIf="editForm">
         <div *ngFor="let strategy of strategies" class="radioRow">
-            <p-radiobutton [inputId]="strategy" [value]="strategy" formControlName="selectedStrategy" size="large" />
+            <p-radiobutton [inputId]="strategy" [value]="strategy" [(ngModel)]="debtStrategy.selectedStrategy" size="large" />
             <label class="radio-label" [for]="strategy">{{strategy}}</label>
             <p-button icon="pi pi-question" [rounded]="true" [text]="true" size="small"></p-button>
         </div>
-        <p-table *ngIf="debtStrategyForm.value.selectedStrategy === 'Custom'" [reorderableColumns]="true"
+        <p-table *ngIf="debtStrategy.selectedStrategy === 'Custom'" [reorderableColumns]="true"
             (onRowReorder)="onRowReorder($event)" [value]="debts">
             <ng-template #header>
                 <tr>
@@ -77,7 +78,7 @@
         </p-table>
         <div class="endRow">
             <p-button label="Cancel" severity="secondary" (click)="editForm = false" />
-            <p-button type="submit">Submit</p-button>
+            <p-button (click)="onSubmit()">Submit</p-button>
         </div>
-    </form>
+    </div>
 </p-card>

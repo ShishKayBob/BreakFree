@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { RadioButtonModule } from 'primeng/radiobutton';
@@ -10,13 +10,14 @@ import { DebtService } from '../../../services/debt.service';
 import Debt from '../../../types/debt';
 import { AccordionModule } from 'primeng/accordion';
 import DebtInfo from '../../../types/debtInfo';
+import Strategy from '../../../types/strategy';
 
 @Component({
   selector: 'debt-strategy',
   imports: [CardModule,
     RadioButtonModule,
     CommonModule,
-    ReactiveFormsModule,
+    FormsModule,
     ButtonModule,
     TableModule,
     AccordionModule],
@@ -24,7 +25,7 @@ import DebtInfo from '../../../types/debtInfo';
   styleUrl: './debt-strategy.component.scss'
 })
 export class DebtStrategyComponent {
-  public debtStrategyForm!: FormGroup;
+  public debtStrategy: Strategy = {selectedStrategy: '', repaymentOrder: []};
 
   public strategies: string[] = ['Snowball', 'Avalanche', 'Custom'];
 
@@ -40,16 +41,11 @@ export class DebtStrategyComponent {
   ) { }
 
   ngOnInit() {
-    this.debtStrategyForm = this.formBuilder.group({
-      selectedStrategy: ['', Validators.required],
-      repaymentOrder: [[...this.debts]],
-    })
 
     this.debtServiceSubscription = this.debtService.$debtService
       .subscribe((value: DebtInfo) => {
-        this.debts = [...value.debts];
-        this.debtStrategyForm.patchValue(value.strategy);
-        this.debtStrategyForm.updateValueAndValidity();
+        this.debts = value.debts;
+        this.debtStrategy = value.strategy;
       });
   }
 
@@ -59,7 +55,7 @@ export class DebtStrategyComponent {
 
   public onRowReorder(event: TableRowReorderEvent) {
     const { dragIndex, dropIndex } = event;
-    let arr = [...this.debtStrategyForm.value.repaymentOrder];
+    let arr = [...this.debtStrategy.repaymentOrder];
 
     if (dragIndex === undefined || dropIndex === undefined || dragIndex < 0 || dragIndex >= arr.length || dropIndex < 0 || dropIndex >= arr.length) {
       // Do nothing for now
@@ -67,14 +63,12 @@ export class DebtStrategyComponent {
       const moved = arr.splice(dragIndex, 1)[0];
       arr.splice(dropIndex, 0, moved);
 
-      this.debtStrategyForm.patchValue({ repaymentOrder: arr })
-      this.debtStrategyForm.updateValueAndValidity();
+      this.debtStrategy.repaymentOrder = arr;
     }
   }
 
   public onSubmit() {
-    console.log(this.debtStrategyForm.value.repaymentOrder)
-    this.debtService.saveDebtStrategy(this.debtStrategyForm.value);
+    this.debtService.saveDebtStrategy(this.debtStrategy);
     this.editForm = false;
   }
 
