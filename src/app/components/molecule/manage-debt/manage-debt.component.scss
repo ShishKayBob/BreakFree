@@ -1,0 +1,14 @@
+.endRow {
+    display:flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: .5rem;
+}
+
+.inputGroup {
+    margin-bottom: 1rem;
+}
+
+.label {
+    margin-bottom: 0.3rem;
+}

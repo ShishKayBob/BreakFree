@@ -1,29 +1,72 @@
-<p-card>
-    <p-button label="Add Debt" icon="pi pi-plus" (onClick)="addDebt()"/>
-    <p-table [value]="debts" >
-    <ng-template #header>
-        <tr>
-            <th>Name</th>
-            <th>Type</th>
-            <th>Initial</th>
-            <th>Current</th>
-            <th>Estimated Minimum</th>
-            <th></th>
-        </tr>
-    </ng-template>
-    <ng-template #body let-debt>
-        <tr>
-            <td>{{ debt.name }}</td>
-            <td>{{ debt.type }}</td>
-            <td>{{ debt.initialBalance }}</td>
-            <td>{{ debt.currentBalance }}</td>
-            <td>{{ debt.estMinPayment }}</td>
-            <td>
-                <p-button icon="pi pi-check"></p-button>
-                <p-button icon="pi pi-pencil"></p-button>
-                <p-button icon="pi pi-trash"></p-button>
-            </td>
-        </tr>
-    </ng-template>
-</p-table>
+<p-card header="Debt Overview" subheader="All of your debt in a managable list. Add, Remove, Edit, and Sort your debts for easy viewing.">
+    <p-table [value]="debts">
+        <ng-template #header>
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Initial Balance</th>
+                <th>Current Balance</th>
+                <th>Estimated Minimum</th>
+                <th><p-button icon="pi pi-plus" label="Add Debt" (click)="toggleAddDebtDialog()"></p-button></th>
+            </tr>
+        </ng-template>
+        <ng-template #body let-debt let-index>
+            <tr>
+                <td>{{ debt.name }}</td>
+                <td>{{ debt.type }}</td>
+                <td>{{ debt.initialBalance }}</td>
+                <td>{{ debt.currentBalance }}</td>
+                <td>{{ debt.estMinPayment }}</td>
+                <td>
+                    <!-- <p-button icon="pi pi-check"></p-button>
+                    <p-button icon="pi pi-pencil"></p-button> -->
+                    <p-button icon="pi pi-trash" label="Delete" (click)="deleteDebt(index)"></p-button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
 </p-card>
+
+<p-dialog header="Add New Debt" [modal]="true" [(visible)]="addDebtDialog" [style]="{ width: '25rem' }">
+    <span class="p-text-secondary">Please fill out all information.</span>
+    <form [formGroup]="newDebtForm" (ngSubmit)="addDebt()">
+        <p class="label">Name</p>
+        <p-inputgroup class="inputGroup">
+            <input #name pInputText type="text" formControlName="name" />
+        </p-inputgroup>
+
+
+        <p class="label">Type</p>
+        <p-inputgroup class="inputGroup">
+            <p-select #type [options]="debtTypes" optionLabel="name" optionValue="code" formControlName="type"
+                placeholder="Select a Type"></p-select>
+        </p-inputgroup>
+
+
+        <p class="label">Balance</p>
+        <p-inputgroup class="inputGroup">
+            <p-inputgroup-addon>$</p-inputgroup-addon>
+            <p-inputnumber #balance formControlName="initialBalance" mode="decimal"
+                [minFractionDigits]="2"></p-inputnumber>
+        </p-inputgroup>
+
+        <p class="label">APR</p>
+        <p-inputgroup class="inputGroup">
+            <p-inputnumber #apr formControlName="interestRate" mode="decimal" [minFractionDigits]="2" [min]="0"
+                [max]="100"></p-inputnumber>
+            <p-inputgroup-addon>%</p-inputgroup-addon>
+        </p-inputgroup>
+
+        <p class="label">Estimated Minimum Payment</p>
+        <p-inputgroup class="inputGroup">
+            <p-inputgroup-addon>$</p-inputgroup-addon>
+            <p-inputnumber #minPay formControlName="estMinPayment" mode="decimal"
+                [minFractionDigits]="2"></p-inputnumber>
+        </p-inputgroup>
+
+        <div class="endRow">
+            <p-button label="Cancel" severity="secondary" (click)="toggleAddDebtDialog()" />
+            <p-button label="Create" type="submit" [disabled]="!newDebtForm.valid"/>
+        </div>
+    </form>
+</p-dialog>
