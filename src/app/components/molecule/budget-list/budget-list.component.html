@@ -1,1 +1,45 @@
-<p>budget-list works!</p>
+<p-card header="Budget Builder"
+    subheader="Add your take home after taxes, your bills, savings, and we will automatically add your debt from Debt Center for a full view of where your money is going!">
+    <p-table [value]="budget.categories">
+        <ng-template #header>
+            <tr>
+                <th>Category</th>
+                <th>Amount</th>
+                <th></th>
+            </tr>
+             <tr>
+                <td>
+                    <input #name pInputText type="text" />
+                </td>
+                <td>
+                    <p-inputgroup class="inputGroup">
+                        <p-inputgroup-addon>$</p-inputgroup-addon>
+                        <p-inputnumber #balance mode="decimal"
+                            [minFractionDigits]="2"></p-inputnumber>
+                    </p-inputgroup>
+                </td>
+                <td><p-button icon="pi pi-plus" label="Add"></p-button></td>
+            </tr>
+            <tr>
+                <td>
+                    Take Home Pay:
+                </td>
+                <td>
+                    {{budget.takeHome}}
+                </td>
+                <td></td>
+            </tr>
+        </ng-template>
+        <ng-template #body let-bill let-index>
+            <tr>
+                <td>{{ bill.name }}</td>
+                <td>${{ bill.amount }}</td>
+                <td>
+                    <!-- <p-button icon="pi pi-check"></p-button>
+                    <p-button icon="pi pi-pencil"></p-button> -->
+                    <!-- <p-button icon="pi pi-trash" label="Delete" (click)="deleteDebt(index)"></p-button> -->
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</p-card>
