@@ -5,39 +5,36 @@
             <tr>
                 <th>Category</th>
                 <th>Amount</th>
-                <th></th>
-            </tr>
-             <tr>
-                <td>
-                    <input #name pInputText type="text" />
-                </td>
-                <td>
-                    <p-inputgroup class="inputGroup">
-                        <p-inputgroup-addon>$</p-inputgroup-addon>
-                        <p-inputnumber #balance mode="decimal"
-                            [minFractionDigits]="2"></p-inputnumber>
-                    </p-inputgroup>
-                </td>
-                <td><p-button icon="pi pi-plus" label="Add"></p-button></td>
-            </tr>
-            <tr>
-                <td>
-                    Take Home Pay:
-                </td>
-                <td>
-                    {{budget.takeHome}}
-                </td>
-                <td></td>
+                <th><p-button icon="pi pi-plus" label="Add Row" (click)="addRow()"></p-button></th>
             </tr>
         </ng-template>
         <ng-template #body let-bill let-index>
             <tr>
-                <td>{{ bill.name }}</td>
-                <td>${{ bill.amount }}</td>
+                <td [pEditableColumn]="bill.name" pEditableColumnField="name">
+                    <p-cellEditor>
+                        <ng-template #input>
+                            <input pInputText type="text" [(ngModel)]="bill.name" />
+                        </ng-template>
+                        <ng-template #output>
+                            {{ bill.name }}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td [pEditableColumn]="bill.amount" pEditableColumnField="amount">
+                    <p-cellEditor>
+                        <ng-template #input>
+                            <p-inputgroup>
+                                <p-inputgroup-addon>$</p-inputgroup-addon>
+                                <p-inputnumber [(ngModel)]="bill.amount" mode="decimal"
+                                    [maxFractionDigits]="2"></p-inputnumber>
+                            </p-inputgroup>
+                        </ng-template>
+                        <ng-template #output>
+                            ${{ bill.amount }}
+                        </ng-template>
+                    </p-cellEditor>
                 <td>
-                    <!-- <p-button icon="pi pi-check"></p-button>
-                    <p-button icon="pi pi-pencil"></p-button> -->
-                    <!-- <p-button icon="pi pi-trash" label="Delete" (click)="deleteDebt(index)"></p-button> -->
+                    <p-button icon="pi pi-trash" label="Delete"></p-button>
                 </td>
             </tr>
         </ng-template>

@@ -26,6 +26,20 @@ import { CardModule } from 'primeng/card';
 })
 export class BudgetListComponent {
 
-  public budget: Budget = { takeHome: 0, categories: []};
+  public budget: Budget = { takeHome: 0, categories: [] };
+
+  constructor() { }
+
+  ngOnInit() {
+
+  }
+
+  public addRow() {
+    this.budget.categories.push({ name: 'New Category', amount: 0 });
+  }
+
+  public onEditComplete() {
+
+  }
 
 }
