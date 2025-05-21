@@ -1,0 +1,52 @@
+:host ::ng-deep .p-menubar {
+    background: var(--p-primary-color);
+    border: none;
+    border-radius: 0;
+
+    .p-menubar-mobile,
+    .p-menubar-root-list {
+        background: var(--p-primary-color);
+        border: none;
+        border-radius: 0;
+    }
+
+    .p-menubar-item-content {
+        transition: none;
+    }
+
+    .p-menubar-item-link {
+        background-clip: inherit;
+        background-color: var(--p-primary-color);
+        color: var(--p-secondary-500);
+        border-radius: 5px;
+
+        &:hover {
+            background-color: var(--p-primary-500);
+        }
+
+        &:focus {
+            background-color: var(--p-primary-500);
+        }
+
+         
+    }
+
+    .p-menubar-button {
+        background: var(--p-primary-color);
+        color: var(--p-secondary-500);
+
+        &:hover {
+            background: var(--p-primary-500);
+        }
+
+        &:focus {
+            background: var(--p-primary-500);
+        }
+    }
+}
+
+.mini-logo {
+    font-family: "Poppins";
+    font-weight: 700;
+    color: var(--p-secondary-500);
+}

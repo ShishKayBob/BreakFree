@@ -1,0 +1,12 @@
+<p-menubar [model]="items">
+    <ng-template #start>
+        <img src="assets/ChainLogo.png" height="30px" width="30px">
+        <span class="mini-logo">BreakFree</span>
+        </ng-template>
+    <ng-template #item let-item let-root="root">
+        <a class="p-menubar-item-link" href="{{item.routerLink}}">
+            <i class="{{item.icon}}"></i>
+            <span>{{ item.label }}</span>
+        </a>
+    </ng-template>
+</p-menubar>

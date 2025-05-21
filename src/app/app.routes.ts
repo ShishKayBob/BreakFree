@@ -5,6 +5,6 @@ import { DebtCenterComponent } from './components/organism/debt-center/debt-cent
 
 export const routes: Routes = [
     { path: '', component: LandingPageComponent },
-    { path: '', component: DashboardComponent },
-    { path: '', component: DebtCenterComponent }
+    { path: 'dashboard', component: DashboardComponent },
+    { path: 'debt-center', component: DebtCenterComponent }
 ];

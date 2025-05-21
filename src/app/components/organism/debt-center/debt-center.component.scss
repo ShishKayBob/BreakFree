@@ -1,0 +1,15 @@
+.layout {
+    display: grid;
+    gap: 1rem;
+    margin: 1rem;
+}
+
+.debtTable {
+    grid-column: 1 / span 2;
+    align-self: stretch;
+}
+
+.debtStrategy {
+    grid-column: 3 / span 1;
+    align-self: stretch;
+}

@@ -1,13 +1,21 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { ButtonModule } from 'primeng/button';
+import { NavigationComponent } from './components/molecule/navigation/navigation.component';
+import { LocalStorageService } from './services/local-storage.service';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, ButtonModule],
+  imports: [RouterOutlet, NavigationComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = 'breakfree';
+
+  constructor(public localStorageService: LocalStorageService) {
+
+  }
+
+  ngOnInit() {
+    this.localStorageService.restoreData('breakfree-data');
+  }
 }
