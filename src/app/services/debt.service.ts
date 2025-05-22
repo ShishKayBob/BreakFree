@@ -5,6 +5,7 @@ import Payment from '../types/payment';
 import { LocalStorageService } from './local-storage.service';
 import Strategy from '../types/strategy';
 import DebtInfo from '../types/debtInfo';
+import { cloneArray } from '../utils/arrayUtils';
 
 @Injectable({
   providedIn: 'root'
@@ -25,41 +26,34 @@ export class DebtService {
       });
   }
 
-  public save() {
-    this.localStorageService.saveData('breakfree-data', { debts: this.debts, strategy: this.strategy });
-  }
-
   public addDebt(debt: Debt) {
     this.debts.push(debt);
     this.pushSubject();
-    this.save();
   }
 
   public editDebt(debtIndex: number, debt: Debt) {
     this.debts[debtIndex] = debt;
     this.pushSubject();
-    this.save();
   }
 
   public removeDebt(debtIndex: number) {
     this.debts.splice(debtIndex, 1);
     this.pushSubject();
-    this.save();
   }
 
   public makePayment(debtIndex: number, payment: Payment) {
     this.debts[debtIndex].paymentHistory.push(payment);
     this.pushSubject();
-    this.save();
   }
 
   public saveDebtStrategy(strategy: Strategy) {
     this.strategy = strategy;
     this.pushSubject();
-    this.save();
   }
 
   public pushSubject() {
-    this.$debtService = new BehaviorSubject({ strategy: this.strategy, debts: this.debts});
+    console.log(this.debts);
+    this.$debtService = new BehaviorSubject({ strategy: this.strategy, debts: cloneArray(this.debts)});
+    this.localStorageService.saveData('breakfree-data', { debts: this.debts, strategy: this.strategy });
   }
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CardModule } from 'primeng/card';
 import { TableModule } from 'primeng/table';
 import Debt from '../../../types/debt';
@@ -15,6 +15,7 @@ import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import DebtInfo from '../../../types/debtInfo';
+import { cloneArray } from '../../../utils/arrayUtils';
 
 @Component({
   selector: 'manage-debt',
@@ -30,7 +31,7 @@ import DebtInfo from '../../../types/debtInfo';
     InputGroupAddonModule,
     FloatLabelModule],
   templateUrl: './manage-debt.component.html',
-  styleUrl: './manage-debt.component.scss'
+  styleUrl: './manage-debt.component.scss',
 })
 export class ManageDebtComponent {
   public debts: Debt[] = [];
@@ -55,7 +56,7 @@ export class ManageDebtComponent {
   ngOnInit() {    
     this.debtServiceSubscription = this.debtService.$debtService
       .subscribe((value: DebtInfo) => {
-        this.debts = [...value.debts];
+        this.debts = value.debts;
       });
 
     this.newDebtForm = this.formBuilder.group({

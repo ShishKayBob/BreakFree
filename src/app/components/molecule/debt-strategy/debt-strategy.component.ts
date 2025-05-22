@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormBuilder, FormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { RadioButtonModule } from 'primeng/radiobutton';
@@ -11,6 +11,7 @@ import Debt from '../../../types/debt';
 import { AccordionModule } from 'primeng/accordion';
 import DebtInfo from '../../../types/debtInfo';
 import Strategy from '../../../types/strategy';
+import { cloneArray } from '../../../utils/arrayUtils';
 
 @Component({
   selector: 'debt-strategy',
@@ -29,23 +30,24 @@ export class DebtStrategyComponent {
 
   public strategies: string[] = ['Snowball', 'Avalanche', 'Custom'];
 
-  public debts: Debt[] = [];
-
   public editForm: boolean = false;
+
+  public debts: Debt[] = [];
 
   private debtServiceSubscription!: Subscription;
 
   constructor(
-    private debtService: DebtService,
-    private formBuilder: FormBuilder
+    private debtService: DebtService
   ) { }
 
   ngOnInit() {
-
     this.debtServiceSubscription = this.debtService.$debtService
       .subscribe((value: DebtInfo) => {
-        this.debts = value.debts;
         this.debtStrategy = value.strategy;
+        if (!this.debtStrategy.repaymentOrder.length) {
+          this.debtStrategy.repaymentOrder = cloneArray(value.debts);
+        }
+        this.debts = cloneArray(this.debtStrategy.repaymentOrder);
       });
   }
 
@@ -55,15 +57,11 @@ export class DebtStrategyComponent {
 
   public onRowReorder(event: TableRowReorderEvent) {
     const { dragIndex, dropIndex } = event;
-    let arr = [...this.debtStrategy.repaymentOrder];
-
-    if (dragIndex === undefined || dropIndex === undefined || dragIndex < 0 || dragIndex >= arr.length || dropIndex < 0 || dropIndex >= arr.length) {
+    if (dragIndex === undefined || dropIndex === undefined || dragIndex < 0 || dragIndex >= this.debtStrategy.repaymentOrder.length || dropIndex < 0 || dropIndex >= this.debtStrategy.repaymentOrder.length) {
       // Do nothing for now
     } else {
-      const moved = arr.splice(dragIndex, 1)[0];
-      arr.splice(dropIndex, 0, moved);
-
-      this.debtStrategy.repaymentOrder = arr;
+      const moved = this.debtStrategy.repaymentOrder.splice(dragIndex, 1)[0];
+      this.debtStrategy.repaymentOrder.splice(dropIndex, 0, moved);
     }
   }
 

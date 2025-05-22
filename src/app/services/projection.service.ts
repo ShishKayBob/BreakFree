@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import Debt from '../types/debt';
 import Strategy from '../types/strategy';
 import { PaymentResult } from '../types/paymentResult';
+import { cloneArray } from '../utils/arrayUtils';
 
 @Injectable({
   providedIn: 'root'
@@ -15,12 +16,9 @@ export class ProjectionService {
   monthlyBudget: number,
   strategy: Strategy
 ): PaymentResult {
-  const cloneDebts = (ds: Debt[]) =>
-    ds.map(d => ({ ...d }));
-
   let months = 0;
   let totalInterest = 0;
-  let debtsCopy = cloneDebts(debts);
+  let debtsCopy = cloneArray(debts);
   const history: { [month: number]: Debt[] } = {};
 
   while (debtsCopy.some(d => d.currentBalance > 0)) {
@@ -62,7 +60,7 @@ export class ProjectionService {
     }
 
     // Save history (shallow copy)
-    history[months + 1] = cloneDebts(debtsCopy);
+    history[months + 1] = cloneArray(debtsCopy);
     months++;
   }
 

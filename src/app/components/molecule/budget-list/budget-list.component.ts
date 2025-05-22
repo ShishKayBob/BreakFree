@@ -9,6 +9,10 @@ import { InputTextModule } from 'primeng/inputtext';
 import { TableModule } from 'primeng/table';
 import Budget from '../../../types/budget';
 import { CardModule } from 'primeng/card';
+import { DividerModule } from 'primeng/divider';
+import { DebtService } from '../../../services/debt.service';
+import DebtInfo from '../../../types/debtInfo';
+import Debt from '../../../types/debt';
 
 @Component({
   selector: 'budget-list',
@@ -20,22 +24,32 @@ import { CardModule } from 'primeng/card';
     CommonModule,
     InputGroupAddonModule,
     InputGroupModule,
-    CardModule],
+    CardModule,
+    DividerModule],
   templateUrl: './budget-list.component.html',
   styleUrl: './budget-list.component.scss'
 })
 export class BudgetListComponent {
 
-  public budget: Budget = { takeHome: 0, categories: [] };
+  public budget: Budget = { income: [], expenses: [] };
 
-  constructor() { }
+  public debts: Debt[] = [];
+
+  constructor(private debtService: DebtService) { }
 
   ngOnInit() {
+    this.debtService.$debtService.subscribe((value: DebtInfo) => {
+      this.debts = [...value.debts];
+    })
 
   }
 
-  public addRow() {
-    this.budget.categories.push({ name: 'New Category', amount: 0 });
+  public addRow(category: string) {
+    if (category === 'expense') {
+      this.budget.expenses.push({ name: 'New Expense', amount: 0 });
+    } else {
+      this.budget.income.push({ name: 'New Income', amount: 0 });
+    }
   }
 
   public onEditComplete() {
