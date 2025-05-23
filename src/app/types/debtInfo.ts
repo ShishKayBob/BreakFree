@@ -1,7 +1,7 @@
 import Debt from "./debt";
-import Strategy from "./strategy";
 
 export default interface DebtInfo {
-    strategy: Strategy,
+    strategy: string,
+    repaymentOrder: number[],
     debts: Debt[],
 }

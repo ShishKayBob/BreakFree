@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { CardModule } from 'primeng/card';
 import { TableModule } from 'primeng/table';
 import Debt from '../../../types/debt';
@@ -34,6 +34,7 @@ import { cloneArray } from '../../../utils/arrayUtils';
   styleUrl: './manage-debt.component.scss',
 })
 export class ManageDebtComponent {
+  @Input()
   public debts: Debt[] = [];
 
   public newDebtForm!: FormGroup;
@@ -53,18 +54,13 @@ export class ManageDebtComponent {
     private formBuilder: FormBuilder
   ) { }
 
-  ngOnInit() {    
-    this.debtServiceSubscription = this.debtService.$debtService
-      .subscribe((value: DebtInfo) => {
-        this.debts = value.debts;
-      });
-
+  ngOnInit() {
     this.newDebtForm = this.formBuilder.group({
       name: ['', [Validators.required, Validators.minLength(2)]],
       type: ['credit', Validators.required],
-      initialBalance: ['', [Validators.required, Validators.min(0)]],
-      interestRate: ['', [Validators.required, Validators.min(0), Validators.max(100)]],
-      estMinPayment: ['', [Validators.required, Validators.min(0)]],
+      initialBalance: ['0.00', [Validators.required, Validators.min(0)]],
+      interestRate: ['0.00', [Validators.required, Validators.min(0), Validators.max(100)]],
+      estMinPayment: ['0.00', [Validators.required, Validators.min(0)]],
     });
   }
 

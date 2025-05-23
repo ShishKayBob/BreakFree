@@ -3,7 +3,6 @@ import { BehaviorSubject, Subscription } from 'rxjs';
 import Debt from '../types/debt';
 import Payment from '../types/payment';
 import { LocalStorageService } from './local-storage.service';
-import Strategy from '../types/strategy';
 import DebtInfo from '../types/debtInfo';
 import { cloneArray } from '../utils/arrayUtils';
 
@@ -15,19 +14,23 @@ export class DebtService {
 
   private debts: Debt[] = [];
 
-  private strategy: Strategy = { selectedStrategy: '', repaymentOrder: []};
+  private strategy: string = '';
+
+  private repaymentOrder: number[] = [];
 
   constructor(public localStorageService: LocalStorageService) {
     this.localStorageService.$savedData
       .subscribe((value: any) => {
         this.debts = value?.debts ? value.debts : [];
-        this.strategy = value?.strategy ? value.strategy : { selectedStrategy: '', repaymentOrder: []};
-        this.$debtService = new BehaviorSubject({ strategy: this.strategy, debts: this.debts});
+        this.strategy = value?.strategy ? value.strategy : '';
+        this.repaymentOrder = value?.repaymentOrder ? [...value.repaymentOrder] : [];
+        this.$debtService = new BehaviorSubject({ strategy: this.strategy, debts: this.debts, repaymentOrder: this.repaymentOrder });
       });
   }
 
   public addDebt(debt: Debt) {
     this.debts.push(debt);
+    this.repaymentOrder.push(this.debts.length);
     this.pushSubject();
   }
 
@@ -38,7 +41,16 @@ export class DebtService {
 
   public removeDebt(debtIndex: number) {
     this.debts.splice(debtIndex, 1);
+    const orderIndex = this.repaymentOrder.findIndex((value) => value === debtIndex+1);
+    this.repaymentOrder.splice(orderIndex, 1);
+    this.repaymentOrder.forEach((value, index, arr) => {
+      if (value > debtIndex) {
+        arr[index] = value - 1;
+      }
+    });
+    console.log(this.repaymentOrder);
     this.pushSubject();
+    console.log(this.repaymentOrder)
   }
 
   public makePayment(debtIndex: number, payment: Payment) {
@@ -46,14 +58,14 @@ export class DebtService {
     this.pushSubject();
   }
 
-  public saveDebtStrategy(strategy: Strategy) {
-    this.strategy = strategy;
+  public saveDebtStrategy(strategy?: string, order?: number[]) {
+    this.strategy = strategy ? strategy : this.strategy;
+    this.repaymentOrder = order ? order : this.repaymentOrder;
     this.pushSubject();
   }
 
   public pushSubject() {
-    console.log(this.debts);
-    this.$debtService = new BehaviorSubject({ strategy: this.strategy, debts: cloneArray(this.debts)});
-    this.localStorageService.saveData('breakfree-data', { debts: this.debts, strategy: this.strategy });
+    this.$debtService = new BehaviorSubject({ strategy: this.strategy, debts: this.debts, repaymentOrder: this.repaymentOrder });
+    this.localStorageService.saveData('breakfree-debts', { strategy: this.strategy, debts: this.debts, repaymentOrder: this.repaymentOrder });
   }
 }

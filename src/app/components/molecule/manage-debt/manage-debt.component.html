@@ -10,7 +10,7 @@
                 <th><p-button icon="pi pi-plus" label="Add Debt" (click)="toggleAddDebtDialog()"></p-button></th>
             </tr>
         </ng-template>
-        <ng-template #body let-debt let-index>
+        <ng-template #body let-debt let-index="rowIndex">
             <tr>
                 <td>{{ debt.name }}</td>
                 <td>{{ debt.type }}</td>

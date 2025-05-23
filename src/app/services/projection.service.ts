@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import Debt from '../types/debt';
-import Strategy from '../types/strategy';
 import { PaymentResult } from '../types/paymentResult';
 import { cloneArray } from '../utils/arrayUtils';
 
@@ -14,7 +13,7 @@ export class ProjectionService {
   public predictDebtPayoff(
   debts: Debt[],
   monthlyBudget: number,
-  strategy: Strategy
+  strategy: string
 ): PaymentResult {
   let months = 0;
   let totalInterest = 0;
@@ -26,8 +25,8 @@ export class ProjectionService {
     const sorted = debtsCopy
       .filter(d => d.currentBalance > 0)
       .sort((a, b) => {
-        if (strategy.selectedStrategy === 'Avalanche') return b.interestRate - a.interestRate;
-        if (strategy.selectedStrategy === 'Snowball') return a.currentBalance - b.currentBalance;
+        if (strategy === 'Avalanche') return b.interestRate - a.interestRate;
+        if (strategy === 'Snowball') return a.currentBalance - b.currentBalance;
         return 0;
       });
 
