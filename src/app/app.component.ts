@@ -17,5 +17,6 @@ export class AppComponent {
 
   ngOnInit() {
     this.localStorageService.restoreDebtData('breakfree-debts');
+    this.localStorageService.restoreBudgetData('breakfree-budget');
   }
 }

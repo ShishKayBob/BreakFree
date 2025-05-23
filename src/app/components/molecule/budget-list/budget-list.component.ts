@@ -6,7 +6,7 @@ import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
-import { TableModule } from 'primeng/table';
+import { TableEditCompleteEvent, TableModule } from 'primeng/table';
 import Budget from '../../../types/budget';
 import { CardModule } from 'primeng/card';
 import { DividerModule } from 'primeng/divider';
@@ -54,8 +54,8 @@ export class BudgetListComponent {
     this.budgetService.deleteBudget(category, index);
   }
 
-  public onEditComplete(category: string, index: number, item: BudgetCategory) {
-    this.budgetService.editBudget(category, index, item);
+  public onEditComplete(category: string, event: any) {
+    this.budgetService.editBudget(category, event);
   }
 
 }

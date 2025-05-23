@@ -40,17 +40,22 @@ export class BudgetService {
     this.pushSubject();
   }
 
-  public editBudget(type: string, index: number, item: BudgetCategory) {
+  public editBudget(type: string, event: any) {
+    const { index, field, data} = event;
     if (type === 'income') {
-      this.budget.income.splice(index, 1, item);
+      let removed: any = this.budget.income.splice(index, 1)[0];
+      removed[field] = data;
+      this.budget.income.splice(index, 0 , removed);
     } else {
-      this.budget.expenses.splice(index, 1, item);
+      let removed: any = this.budget.expenses.splice(index, 1)[0];
+      removed[field] = data;
+      this.budget.expenses.splice(index, 0 , removed);
     }
     this.pushSubject();
   }
 
   public pushSubject() {
       this.$budgetService = new BehaviorSubject(this.budget);
-      // this.localStorageService.saveData('breakfree-data', this.budget);
+      this.localStorageService.saveBudgetData('breakfree-budget', this.budget);
     }
 }
