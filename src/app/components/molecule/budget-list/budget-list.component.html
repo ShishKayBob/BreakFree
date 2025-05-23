@@ -2,7 +2,7 @@
     subheader="Add your take home after taxes, your bills, savings, and we will automatically add your debt from Debt Center for a full view of where your money is going!">
     <h1>Gross Income</h1>
     <p>These are you're source of income after taxes and benefits have been taken out.</p>
-    <p-table [value]="budget.income">
+    <p-table [value]="income">
         <ng-template #header>
             <tr>
                 <th>Income</th>
@@ -44,7 +44,7 @@
     <p-divider />
     <h1>Expenses</h1>
     <p>These are your monthly bills such as rent, morgage, water, electricity, gas, car insurance, etc.</p>
-    <p-table [value]="budget.expenses">
+    <p-table [value]="expenses">
         <ng-template #header>
             <tr>
                 <th>Expense</th>

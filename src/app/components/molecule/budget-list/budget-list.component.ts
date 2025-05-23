@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { InputGroupModule } from 'primeng/inputgroup';
@@ -13,6 +13,8 @@ import { DividerModule } from 'primeng/divider';
 import { DebtService } from '../../../services/debt.service';
 import DebtInfo from '../../../types/debtInfo';
 import Debt from '../../../types/debt';
+import { BudgetService } from '../../../services/budget.service';
+import BudgetCategory from '../../../types/budgetCategory';
 
 @Component({
   selector: 'budget-list',
@@ -31,29 +33,29 @@ import Debt from '../../../types/debt';
 })
 export class BudgetListComponent {
 
-  public budget: Budget = { income: [], expenses: [] };
+  @Input()
+  public income: BudgetCategory[] = [];
 
+  @Input()
+  public expenses: BudgetCategory[] = [];
+
+  @Input()
   public debts: Debt[] = [];
 
-  constructor(private debtService: DebtService) { }
+  constructor(private budgetService: BudgetService) { }
 
-  ngOnInit() {
-    this.debtService.$debtService.subscribe((value: DebtInfo) => {
-      this.debts = [...value.debts];
-    })
-
-  }
+  ngOnInit() { }
 
   public addRow(category: string) {
-    if (category === 'expense') {
-      this.budget.expenses.push({ name: 'New Expense', amount: 0 });
-    } else {
-      this.budget.income.push({ name: 'New Income', amount: 0 });
-    }
+    this.budgetService.addBudget(category, { name: 'Name', amount: 0 });
   }
 
-  public onEditComplete() {
+  public deleteRow(category: string, index: number) {
+    this.budgetService.deleteBudget(category, index);
+  }
 
+  public onEditComplete(category: string, index: number, item: BudgetCategory) {
+    this.budgetService.editBudget(category, index, item);
   }
 
 }

@@ -1,10 +1,9 @@
-import { HostListener, Injectable } from '@angular/core';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import Debt from '../types/debt';
 import Payment from '../types/payment';
 import { LocalStorageService } from './local-storage.service';
 import DebtInfo from '../types/debtInfo';
-import { cloneArray } from '../utils/arrayUtils';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +18,7 @@ export class DebtService {
   private repaymentOrder: number[] = [];
 
   constructor(public localStorageService: LocalStorageService) {
-    this.localStorageService.$savedData
+    this.localStorageService.$savedDebtData
       .subscribe((value: any) => {
         this.debts = value?.debts ? value.debts : [];
         this.strategy = value?.strategy ? value.strategy : '';
@@ -66,6 +65,6 @@ export class DebtService {
 
   public pushSubject() {
     this.$debtService = new BehaviorSubject({ strategy: this.strategy, debts: this.debts, repaymentOrder: this.repaymentOrder });
-    this.localStorageService.saveData('breakfree-debts', { strategy: this.strategy, debts: this.debts, repaymentOrder: this.repaymentOrder });
+    this.localStorageService.saveDebtData('breakfree-debts', { strategy: this.strategy, debts: this.debts, repaymentOrder: this.repaymentOrder });
   }
 }

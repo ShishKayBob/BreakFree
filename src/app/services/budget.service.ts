@@ -14,19 +14,21 @@ export class BudgetService {
   private budget: Budget = { income: [], expenses: [] };
 
    constructor(public localStorageService: LocalStorageService) {
-      this.localStorageService.$savedData
+      this.localStorageService.$savedBudgetData
         .subscribe((value: Budget) => {
           this.budget = value;
           this.$budgetService = new BehaviorSubject(this.budget);
         });
     }
 
-  public addbudget(type: string, item: BudgetCategory) {
+  public addBudget(type: string, item: BudgetCategory) {
     if (type === 'income') {
-      this.budget.income.push(item);
+      this.budget.income?.push(item);
     } else {
-      this.budget.expenses.push(item);
+      this.budget.expenses?.push(item);
     }
+    this.pushSubject();
+    console.log(this.budget)
   }
 
   public deleteBudget(type: string, index: number) {
@@ -35,6 +37,7 @@ export class BudgetService {
     } else {
       this.budget.expenses.splice(index, 1);
     }
+    this.pushSubject();
   }
 
   public editBudget(type: string, index: number, item: BudgetCategory) {
@@ -43,7 +46,7 @@ export class BudgetService {
     } else {
       this.budget.expenses.splice(index, 1, item);
     }
-
+    this.pushSubject();
   }
 
   public pushSubject() {
