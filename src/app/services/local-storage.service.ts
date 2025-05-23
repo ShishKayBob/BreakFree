@@ -6,19 +6,35 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class LocalStorageService {
 
-  public $savedData!: BehaviorSubject<any>;
+  public $savedDebtData!: BehaviorSubject<any>;
 
-  private breakfreeData: any;
+  public $savedBudgetData!: BehaviorSubject<any>;
 
-  public saveData(key: string, data: any): void {
+  private breakfreeDebtData: any;
+
+  private breakfreeBudgetData: any;
+
+  public saveDebtData(key: string, data: any): void {
     localStorage.setItem(key, JSON.stringify(data));
-    this.breakfreeData = data;
-    this.$savedData = new BehaviorSubject(this.breakfreeData);
+    this.breakfreeDebtData = data;
+    this.$savedDebtData = new BehaviorSubject(this.breakfreeDebtData);
   }
 
-  public restoreData(key: string) {
+  public restoreDebtData(key: string) {
     const localData = JSON.parse(localStorage.getItem(key) || 'null');
-    this.breakfreeData = localData ? localData : { debts: [] };
-    this.$savedData = new BehaviorSubject(this.breakfreeData);
+    this.breakfreeDebtData = localData ? localData : { debts: [] };
+    this.$savedDebtData = new BehaviorSubject(this.breakfreeDebtData);
+  }
+
+  public saveBudgetData(key: string, data: any): void {
+    localStorage.setItem(key, JSON.stringify(data));
+    this.breakfreeBudgetData = data;
+    this.$savedBudgetData = new BehaviorSubject(this.breakfreeBudgetData);
+  }
+
+  public restoreBudgetData(key: string) {
+    const localData = JSON.parse(localStorage.getItem(key) || 'null');
+    this.breakfreeBudgetData = localData ? localData : { income: [], expenses: [] };
+    this.$savedBudgetData = new BehaviorSubject(this.breakfreeBudgetData);
   }
 }

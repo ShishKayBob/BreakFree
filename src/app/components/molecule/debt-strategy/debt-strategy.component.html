@@ -1,10 +1,10 @@
 <p-card header="Debt Strategy" subheader="To tackle your debt, you'll need a plan.">
     <div *ngIf="!editForm">
-        <p *ngIf="!debtStrategy.selectedStrategy">Our records show you haven't chosen a payment strategy! Here
+        <p *ngIf="!selectedStrategy">Our records show you haven't chosen a payment strategy! Here
             is some information about the kinds of methods
             we support:</p>
-        <p *ngIf="debtStrategy.selectedStrategy">Our records show you have chosen
-            {{debtStrategy.selectedStrategy}} as a payment strategy!     
+        <p *ngIf="selectedStrategy">Our records show you have chosen
+            {{selectedStrategy}} as a payment strategy!     
         </p>
         <p-accordion value="">
             <p-accordion-panel value="0">
@@ -53,12 +53,12 @@
     </div>
     <div *ngIf="editForm">
         <div *ngFor="let strategy of strategies" class="radioRow">
-            <p-radiobutton [inputId]="strategy" [value]="strategy" [(ngModel)]="debtStrategy.selectedStrategy" size="large" />
+            <p-radiobutton [inputId]="strategy" [value]="strategy" [(ngModel)]="selectedStrategy" size="large" />
             <label class="radio-label" [for]="strategy">{{strategy}}</label>
             <p-button icon="pi pi-question" [rounded]="true" [text]="true" size="small"></p-button>
         </div>
-        <p-table *ngIf="debtStrategy.selectedStrategy === 'Custom'" [reorderableColumns]="true"
-            (onRowReorder)="onRowReorder($event)" [value]="debts">
+        <p-table *ngIf="selectedStrategy === 'Custom'" [reorderableColumns]="true"
+            [value]="repaymentOrder">
             <ng-template #header>
                 <tr>
                     <th></th>
@@ -67,12 +67,12 @@
                 </tr>
             </ng-template>
             <ng-template #body let-debt let-index="rowIndex">
-                <tr [pReorderableRow]="index">
+                <tr [pReorderableRow]="index" >
                     <td>
                         <span class="pi pi-bars" pReorderableRowHandle></span>
                     </td>
-                    <td>{{ debt.name }}</td>
-                    <td>{{ debt.currentBalance }}</td>
+                    <td>{{ getDebtForOrder(debt).name }}</td>
+                    <td>{{ getDebtForOrder(debt).currentBalance }}</td>
                 </tr>
             </ng-template>
         </p-table>

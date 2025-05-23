@@ -1,0 +1,103 @@
+<p-card header="Budget Builder"
+    subheader="Add your take home after taxes, your bills, savings, and we will automatically add your debt from Debt Center for a full view of where your money is going!">
+    <h1>Gross Income</h1>
+    <p>These are you're source of income after taxes and benefits have been taken out.</p>
+    <p-table [value]="income" (onEditComplete)="onEditComplete('income', $event)">
+        <ng-template #header>
+            <tr>
+                <th>Income</th>
+                <th>Amount</th>
+                <th><p-button icon="pi pi-plus" label="Add Row" (click)="addRow('income')"></p-button></th>
+            </tr>
+        </ng-template>
+        <ng-template #body let-income let-index="rowIndex">
+            <tr>
+                <td [pEditableColumn]="income.name" pEditableColumnField="name" [pEditableColumnRowIndex]="index">
+                    <p-cellEditor>
+                        <ng-template #input>
+                            <input pInputText type="text" [(ngModel)]="income.name" />
+                        </ng-template>
+                        <ng-template #output>
+                            {{ income.name }}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td [pEditableColumn]="income.amount" pEditableColumnField="amount" [pEditableColumnRowIndex]="index">
+                    <p-cellEditor>
+                        <ng-template #input>
+                            <p-inputgroup>
+                                <p-inputgroup-addon>$</p-inputgroup-addon>
+                                <p-inputnumber [(ngModel)]="income.amount" mode="decimal"
+                                    [maxFractionDigits]="2"></p-inputnumber>
+                            </p-inputgroup>
+                        </ng-template>
+                        <ng-template #output>
+                            ${{ income.amount }}
+                        </ng-template>
+                    </p-cellEditor>
+                <td>
+                    <p-button icon="pi pi-trash" label="Delete" (click)="deleteRow('income', index)"></p-button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+    <p-divider />
+    <h1>Expenses</h1>
+    <p>These are your monthly bills such as rent, morgage, water, electricity, gas, car insurance, etc.</p>
+    <p-table [value]="expenses" (onEditComplete)="onEditComplete('expenses', $event)">
+        <ng-template #header>
+            <tr>
+                <th>Expense</th>
+                <th>Amount</th>
+                <th><p-button icon="pi pi-plus" label="Add Row" (click)="addRow('expenses')"></p-button></th>
+            </tr>
+        </ng-template>
+        <ng-template #body let-bill let-index>
+            <tr>
+                <td [pEditableColumn]="bill.name" pEditableColumnField="name" [pEditableColumnRowIndex]="index">
+                    <p-cellEditor>
+                        <ng-template #input>
+                            <input pInputText type="text" [(ngModel)]="bill.name" />
+                        </ng-template>
+                        <ng-template #output>
+                            {{ bill.name }}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td [pEditableColumn]="bill.amount" pEditableColumnField="amount" [pEditableColumnRowIndex]="index">
+                    <p-cellEditor>
+                        <ng-template #input>
+                            <p-inputgroup>
+                                <p-inputgroup-addon>$</p-inputgroup-addon>
+                                <p-inputnumber [(ngModel)]="bill.amount" mode="decimal"
+                                    [maxFractionDigits]="2"></p-inputnumber>
+                            </p-inputgroup>
+                        </ng-template>
+                        <ng-template #output>
+                            ${{ bill.amount }}
+                        </ng-template>
+                    </p-cellEditor>
+                <td>
+                    <p-button icon="pi pi-trash" label="Delete"  (click)="deleteRow('expenses', index)"></p-button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+    <p-divider />
+    <h1>Debt</h1>
+    <p>We've imported this data from Debt Center. If you need to make changes please do so there.</p>
+    <p-table [value]="debts">
+        <ng-template #header>
+            <tr>
+                <th>Debt</th>
+                <th>Minimum Payment</th>
+            </tr>
+        </ng-template>
+        <ng-template #body let-debt let-index>
+            <tr>
+                <td>{{ debt.name }}</td>
+                <td>${{ debt.estMinPayment }}<td>
+            </tr>
+        </ng-template>
+    </p-table>
+</p-card>

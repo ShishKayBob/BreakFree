@@ -10,7 +10,7 @@
                 <th><p-button icon="pi pi-plus" label="Add Debt" (click)="toggleAddDebtDialog()"></p-button></th>
             </tr>
         </ng-template>
-        <ng-template #body let-debt let-index>
+        <ng-template #body let-debt let-index="rowIndex">
             <tr>
                 <td>{{ debt.name }}</td>
                 <td>{{ debt.type }}</td>
@@ -47,12 +47,12 @@
         <p-inputgroup class="inputGroup">
             <p-inputgroup-addon>$</p-inputgroup-addon>
             <p-inputnumber #balance formControlName="initialBalance" mode="decimal"
-                [minFractionDigits]="2"></p-inputnumber>
+                [maxFractionDigits]="2"></p-inputnumber>
         </p-inputgroup>
 
         <p class="label">APR</p>
         <p-inputgroup class="inputGroup">
-            <p-inputnumber #apr formControlName="interestRate" mode="decimal" [minFractionDigits]="2" [min]="0"
+            <p-inputnumber #apr formControlName="interestRate" mode="decimal" [maxFractionDigits]="2" [min]="0"
                 [max]="100"></p-inputnumber>
             <p-inputgroup-addon>%</p-inputgroup-addon>
         </p-inputgroup>
@@ -61,7 +61,7 @@
         <p-inputgroup class="inputGroup">
             <p-inputgroup-addon>$</p-inputgroup-addon>
             <p-inputnumber #minPay formControlName="estMinPayment" mode="decimal"
-                [minFractionDigits]="2"></p-inputnumber>
+                [maxFractionDigits]="2"></p-inputnumber>
         </p-inputgroup>
 
         <div class="endRow">

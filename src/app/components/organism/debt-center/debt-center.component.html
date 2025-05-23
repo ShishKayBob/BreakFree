@@ -1,4 +1,4 @@
 <div class="layout">
-    <manage-debt class="debtTable"></manage-debt>
-    <debt-strategy class="debtStrategy"></debt-strategy>
+    <manage-debt class="debtTable" [debts]="debts"></manage-debt>
+    <debt-strategy class="debtStrategy" [debts]="debts" [selectedStrategy]="strategy" [repaymentOrder]="repaymentOrder"></debt-strategy>
 </div>
