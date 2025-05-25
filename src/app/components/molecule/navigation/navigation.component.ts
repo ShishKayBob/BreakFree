@@ -29,7 +29,7 @@ export class NavigationComponent {
     {
       label: 'Monthly View',
       icon: 'pi pi-chart-pie',
-      routerLink: '/overview'
+      routerLink: '/monthly-view'
     }
   ]
 }

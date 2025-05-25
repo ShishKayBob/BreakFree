@@ -1,9 +1,10 @@
 <p-card header="Debt Overview" subheader="All of your debt in a managable list. Add, Remove, Edit, and Sort your debts for easy viewing.">
-    <p-table [value]="debts" [paginator]="true" [rows]="5">
+    <p-table [value]="debts" [paginator]="true" [rows]="10">
         <ng-template #header>
             <tr>
                 <th>Name</th>
                 <th>Type</th>
+                <th>APR</th>
                 <th>Initial Balance</th>
                 <th>Current Balance</th>
                 <th>Estimated Minimum</th>
@@ -14,9 +15,10 @@
             <tr>
                 <td>{{ debt.name }}</td>
                 <td>{{ debt.type }}</td>
-                <td>{{ debt.initialBalance }}</td>
-                <td>{{ debt.currentBalance }}</td>
-                <td>{{ debt.estMinPayment }}</td>
+                <td>{{ debt.interestRate }}%</td>
+                <td>${{ debt.initialBalance }}</td>
+                <td>${{ debt.currentBalance }}</td>
+                <td>${{ debt.estMinPayment }}</td>
                 <td>
                     <!-- <p-button icon="pi pi-check"></p-button>
                     <p-button icon="pi pi-pencil"></p-button> -->

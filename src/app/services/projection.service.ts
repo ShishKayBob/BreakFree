@@ -13,7 +13,8 @@ export class ProjectionService {
   public predictDebtPayoff(
   debts: Debt[],
   monthlyBudget: number,
-  strategy: string
+  strategy: string,
+  repaymentOrder?: Debt[]
 ): PaymentResult {
   let months = 0;
   let totalInterest = 0;

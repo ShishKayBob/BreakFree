@@ -61,6 +61,10 @@
           "defaultConfiguration": "production"
         },
         "serve": {
+          "options": {
+            "host": "breakfree.net",
+            "port": 80
+          },
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {

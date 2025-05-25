@@ -63,6 +63,12 @@ export class DebtService {
     this.pushSubject();
   }
 
+  public getTotalMimimums(): number {
+    let minimums = 0;
+    this.debts.forEach((debt) => minimums += debt.estMinPayment);
+    return minimums;
+  }
+
   public pushSubject() {
     this.$debtService = new BehaviorSubject({ strategy: this.strategy, debts: this.debts, repaymentOrder: this.repaymentOrder });
     this.localStorageService.saveDebtData('breakfree-debts', { strategy: this.strategy, debts: this.debts, repaymentOrder: this.repaymentOrder });

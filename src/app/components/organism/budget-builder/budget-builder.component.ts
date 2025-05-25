@@ -7,10 +7,11 @@ import Debt from '../../../types/debt';
 import Budget from '../../../types/budget';
 import BudgetCategory from '../../../types/budgetCategory';
 import { cloneArray } from '../../../utils/arrayUtils';
+import { DebtAllocationComponent } from '../../molecule/debt-allocation/debt-allocation.component';
 
 @Component({
   selector: 'budget-builder',
-  imports: [BudgetListComponent],
+  imports: [BudgetListComponent, DebtAllocationComponent],
   templateUrl: './budget-builder.component.html',
   styleUrl: './budget-builder.component.scss'
 })
