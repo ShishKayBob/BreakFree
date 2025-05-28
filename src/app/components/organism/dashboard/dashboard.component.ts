@@ -6,10 +6,11 @@ import { DebtService } from '../../../services/debt.service';
 import DebtInfo from '../../../types/debtInfo';
 import { BudgetService } from '../../../services/budget.service';
 import Budget from '../../../types/budget';
+import { ProgressReportComponent } from '../../molecule/progress-report/progress-report.component';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [OutlookComponent],
+  imports: [OutlookComponent, ProgressReportComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })

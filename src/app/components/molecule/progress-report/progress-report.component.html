@@ -1,1 +1,28 @@
-<p>progress-report works!</p>
+<p-card header="Payoff Progress" subheader="Here you can check the progress you've made so far! Keep up the good work!">
+    <p-metergroup [value]="value" labelPosition="start">
+        <ng-template #label>
+            <div class="flex-row">
+                <ng-container *ngFor="let meterItem of value; let index = index">
+                    <p-card [style]="{ background: 'linear-gradient(to right, ' + meterItem.color1 + ', ' + meterItem.color2 + ')' }" styleClass="border border-surface shadow-none">
+                        <div>
+                            <div class="flex-row ends">
+                                <p>{{ meterItem.debt.name }}</p>
+                                <p>{{ (meterItem.debt.currentBalance / meterItem.debt.initialBalance)*100 }}%</p>
+                            </div>
+                        </div>
+                    </p-card>
+                </ng-container>
+            </div>
+        </ng-template>
+        <ng-template #meter let-value let-class="class" let-width="size">
+            <span [class]="class" [style]="{ background: 'linear-gradient(to right, ' + value.color1 + ', ' + value.color2 + ')', width: width }"></span>
+        </ng-template>
+        <ng-template #start let-totalPercent="totalPercent">
+            <div class="flex-row">
+                <span>Total Debt Paid Progress:</span>
+                <span [style]="{ width: totalPercent + '%' }">{{ totalPercent }}%</span>
+                <span>Total Debt: ${{totalDebt}}</span>
+            </div>
+        </ng-template>
+    </p-metergroup>
+</p-card>

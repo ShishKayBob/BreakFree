@@ -3,6 +3,7 @@ import { ChartModule } from 'primeng/chart';
 import { ProjectionService } from '../../../services/projection.service';
 import Debt from '../../../types/debt';
 import { getNextMonthNames } from '../../../utils/dateUtils';
+import { CardModule } from 'primeng/card';
 
 interface ChartSeries {
   label: string;
@@ -11,7 +12,7 @@ interface ChartSeries {
 
 @Component({
   selector: 'outlook',
-  imports: [ChartModule],
+  imports: [ChartModule, CardModule],
   templateUrl: './outlook.component.html',
   styleUrl: './outlook.component.scss'
 })

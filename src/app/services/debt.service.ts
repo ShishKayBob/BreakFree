@@ -69,6 +69,18 @@ export class DebtService {
     return minimums;
   }
 
+  public getTotalInitialDebt() {
+    let total = 0;
+    this.debts.forEach((debt) => total += debt.initialBalance);
+    return total;
+  }
+
+  public getTotalCurrentDebt() {
+    let total = 0;
+    this.debts.forEach((debt) => total += debt.currentBalance);
+    return total;
+  }
+
   public pushSubject() {
     this.$debtService = new BehaviorSubject({ strategy: this.strategy, debts: this.debts, repaymentOrder: this.repaymentOrder });
     this.localStorageService.saveDebtData('breakfree-debts', { strategy: this.strategy, debts: this.debts, repaymentOrder: this.repaymentOrder });
