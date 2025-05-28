@@ -7,10 +7,11 @@ import Debt from '../../../types/debt';
 import Budget from '../../../types/budget';
 import BudgetCategory from '../../../types/budgetCategory';
 import { cloneArray } from '../../../utils/arrayUtils';
+import { DebtAllocationComponent } from '../../molecule/debt-allocation/debt-allocation.component';
 
 @Component({
   selector: 'budget-builder',
-  imports: [BudgetListComponent],
+  imports: [BudgetListComponent, DebtAllocationComponent],
   templateUrl: './budget-builder.component.html',
   styleUrl: './budget-builder.component.scss'
 })
@@ -19,6 +20,8 @@ export class BudgetBuilderComponent {
   public income: BudgetCategory[] = [];
 
   public expenses: BudgetCategory[] = [];
+
+  public allocation: number = 0;
 
   public debts: Debt[] = [];
 
@@ -32,6 +35,7 @@ export class BudgetBuilderComponent {
     this.budgetService.$budgetService.subscribe((value: Budget) => {
       this.income = value.income;
       this.expenses = value.expenses;
+      this.allocation = value.debtAllocation;
     });
   }
 

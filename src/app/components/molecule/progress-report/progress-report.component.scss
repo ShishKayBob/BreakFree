@@ -1,0 +1,9 @@
+.flex-row {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+
+.ends {
+    justify-content: space-between;
+}

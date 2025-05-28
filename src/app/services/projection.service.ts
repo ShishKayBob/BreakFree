@@ -10,10 +10,24 @@ export class ProjectionService {
 
   constructor() { }
 
+  public reorderDebtsByIndexes(debts: Debt[], indexOrder: number[]): Debt[] {
+  if (indexOrder.length !== debts.length) {
+    throw new Error("Index array must be the same length as debts array.");
+  }
+
+  return indexOrder.map(index => {
+    if (index <= 0 || index > debts.length) {
+      throw new Error(`Invalid index ${index} in indexOrder.`);
+    }
+    return debts[index-1];
+  });
+}
+
   public predictDebtPayoff(
   debts: Debt[],
   monthlyBudget: number,
-  strategy: string
+  strategy: string,
+  repaymentOrder: number[]
 ): PaymentResult {
   let months = 0;
   let totalInterest = 0;
@@ -22,14 +36,18 @@ export class ProjectionService {
 
   while (debtsCopy.some(d => d.currentBalance > 0)) {
     // Sort debts based on strategy
-    const sorted = debtsCopy
+    let sorted = [];
+    if (strategy === 'Custom') {
+      sorted = this.reorderDebtsByIndexes(debtsCopy, repaymentOrder);
+    } else {
+    sorted = debtsCopy
       .filter(d => d.currentBalance > 0)
       .sort((a, b) => {
         if (strategy === 'Avalanche') return b.interestRate - a.interestRate;
         if (strategy === 'Snowball') return a.currentBalance - b.currentBalance;
         return 0;
       });
-
+    }
     // Apply interest and accumulate
     for (const debt of sorted) {
       if (debt.currentBalance <= 0) continue;

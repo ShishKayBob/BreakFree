@@ -11,7 +11,7 @@ export class BudgetService {
 
   public $budgetService!: BehaviorSubject<Budget>;
 
-  private budget: Budget = { income: [], expenses: [] };
+  private budget: Budget = { income: [], expenses: [], debtAllocation: 0 };
 
    constructor(public localStorageService: LocalStorageService) {
       this.localStorageService.$savedBudgetData
@@ -52,6 +52,25 @@ export class BudgetService {
       this.budget.expenses.splice(index, 0 , removed);
     }
     this.pushSubject();
+  }
+
+  public editAllocation(amount: number) {
+    if (amount) {
+      this.budget.debtAllocation = amount;
+    }
+    this.pushSubject();
+  }
+
+  public getTotalIncome() {
+    let income = 0;
+    this.budget.income.forEach((item) => income += item.amount);
+    return income;
+  }
+
+  public getTotalExpenses() {
+    let expenses = 0;
+    this.budget.expenses.forEach((item) => expenses += item.amount);
+    return expenses;
   }
 
   public pushSubject() {

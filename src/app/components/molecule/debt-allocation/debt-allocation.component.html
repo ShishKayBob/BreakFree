@@ -1,0 +1,5 @@
+<p-card header="Extra Payment Allocation" subheader="To our estimations, you can add a maximum of ${{maxAllocation}} in addition to your minimums to pay off your debt faster!">
+    <p>You can adjust this below to give yourself a set amount to budget.</p>
+    <input type="text" pInputText [(ngModel)]="allocation" (blur)="onChange()"/>
+    <p-slider [(ngModel)]="allocation" min="0" max="{{maxAllocation}}" (onChange)="onChange()"/>
+</p-card>
