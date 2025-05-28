@@ -3,9 +3,10 @@ import { CardModule } from 'primeng/card';
 import { DebtService } from '../../../services/debt.service';
 import { BudgetService } from '../../../services/budget.service';
 import { InputTextModule } from 'primeng/inputtext';
-import { SliderModule } from 'primeng/slider';
+import { SliderChangeEvent, SliderModule } from 'primeng/slider';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ProjectionService } from '../../../services/projection.service';
 
 @Component({
   selector: 'debt-allocation',
@@ -20,7 +21,7 @@ export class DebtAllocationComponent {
 
   public maxAllocation: number = 0;
 
-  constructor(private debtService: DebtService, private budgetService: BudgetService) { }
+  constructor(private debtService: DebtService, private budgetService: BudgetService, private projectionservice: ProjectionService) { }
 
   ngOnInit() {
     this.maxAllocation = this.getMaxAllocation();
@@ -32,6 +33,10 @@ export class DebtAllocationComponent {
 
   public getMinAllocation(): number {
     return this.debtService.getTotalMimimums();
+  }
+
+  public onChange() {
+    this.budgetService.editAllocation(this.allocation);
   }
 
 }

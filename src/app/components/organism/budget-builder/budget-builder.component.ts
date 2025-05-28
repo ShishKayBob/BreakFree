@@ -21,6 +21,8 @@ export class BudgetBuilderComponent {
 
   public expenses: BudgetCategory[] = [];
 
+  public allocation: number = 0;
+
   public debts: Debt[] = [];
 
   constructor(private debtService: DebtService, private budgetService: BudgetService) { }
@@ -33,6 +35,7 @@ export class BudgetBuilderComponent {
     this.budgetService.$budgetService.subscribe((value: Budget) => {
       this.income = value.income;
       this.expenses = value.expenses;
+      this.allocation = value.debtAllocation;
     });
   }
 

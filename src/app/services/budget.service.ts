@@ -55,7 +55,10 @@ export class BudgetService {
   }
 
   public editAllocation(amount: number) {
-    this.budget.debtAllocation = amount;
+    if (amount) {
+      this.budget.debtAllocation = amount;
+    }
+    this.pushSubject();
   }
 
   public getTotalIncome() {

@@ -14,7 +14,7 @@ export class ProjectionService {
   debts: Debt[],
   monthlyBudget: number,
   strategy: string,
-  repaymentOrder?: Debt[]
+  repaymentOrder?: number[]
 ): PaymentResult {
   let months = 0;
   let totalInterest = 0;
