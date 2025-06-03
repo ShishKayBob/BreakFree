@@ -19,13 +19,7 @@ export class DebtAllocationComponent {
   @Input()
   public allocation: number = 0;
 
-  public maxAllocation: number = 0;
-
   constructor(private debtService: DebtService, private budgetService: BudgetService, private projectionservice: ProjectionService) { }
-
-  ngOnInit() {
-    this.maxAllocation = this.getMaxAllocation();
-  }
 
   public getMaxAllocation(): number {
     return parseFloat((this.budgetService.getTotalIncome() - this.budgetService.getTotalExpenses() - this.getMinAllocation()).toFixed(2));

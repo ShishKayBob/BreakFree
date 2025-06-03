@@ -7,7 +7,7 @@
                         <div>
                             <div class="flex-row ends">
                                 <p>{{ meterItem.debt.name }}</p>
-                                <p>{{ (meterItem.debt.currentBalance / meterItem.debt.initialBalance)*100 }}%</p>
+                                <p>{{ 100 - (meterItem.debt.currentBalance / meterItem.debt.initialBalance)*100 }}%</p>
                             </div>
                         </div>
                     </p-card>
@@ -20,7 +20,7 @@
         <ng-template #start let-totalPercent="totalPercent">
             <div class="flex-row">
                 <span>Total Debt Paid Progress:</span>
-                <span [style]="{ width: totalPercent + '%' }">{{ totalPercent }}%</span>
+                <span [style]="{ width: totalPercent + '%' }">{{ 100 - totalPercent }}%</span>
                 <span>Total Debt: ${{totalDebt}}</span>
             </div>
         </ng-template>
