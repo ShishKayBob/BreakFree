@@ -1,59 +1,80 @@
-# Breakfree
+# BreakFree
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.8.
+BreakFree is a modern Angular 20+ web application for personal finance management, featuring budgeting, debt tracking, and financial projections. It uses PrimeNG v20, PrimeUIX themes, and Chart.js for a rich, interactive UI.
 
-## Development server
+## Features
+- Customizable theme with extended semantic colors (primary, secondary, accent) based on the Aura preset
+- Modular Angular architecture with atomic design (atom, molecule, organism components)
+- Budget builder, debt center, monthly view, and dashboard
+- Data visualization with Chart.js
+- Persistent data via local storage
+- Responsive and accessible UI with PrimeNG components
 
-To start a local development server, run:
+## Getting Started
 
+### Prerequisites
+- Node.js v18+ (recommended)
+- npm v9+
+
+### Installation
+1. Clone the repository:
+   ```bash
+   git clone <your-repo-url>
+   cd BreakFree
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+### Development Server
+Start the local dev server:
 ```bash
-ng serve
+npm start
+```
+Visit [http://localhost:4200/](http://localhost:4200/) in your browser. The app reloads on file changes.
+
+### Building for Production
+To build the project:
+```bash
+npm run build
+```
+The output is in the `dist/` directory, optimized for deployment.
+
+### Running Unit Tests
+Run tests with Karma:
+```bash
+npm test
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+### Theming & Customization
+- The theme is defined in `src/app/breakfree-theme.ts` and extends the Aura preset.
+- You can customize primary, secondary, and accent colors in the `semantic` section.
+- TypeScript overrides are in `src/app/types/overrides/semantics.ts` to support custom theme keys.
 
-## Code scaffolding
+### Project Structure
+- `src/app/components/atom/` – Smallest UI elements (e.g., buttons, headers)
+- `src/app/components/molecule/` – Compound components (e.g., budget list, debt allocation)
+- `src/app/components/organism/` – Complex UI sections (e.g., dashboard, landing page)
+- `src/app/services/` – Business logic and data services
+- `src/app/types/` – TypeScript interfaces and type overrides
+- `src/app/utils/` – Utility functions
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+### Useful Commands
+- Generate a new component:
+  ```bash
+  ng generate component <component-name>
+  ```
+- List all schematics:
+  ```bash
+  ng generate --help
+  ```
 
 ## Additional Resources
+- [Angular CLI Documentation](https://angular.dev/tools/cli)
+- [PrimeNG Documentation](https://primeng.org/)
+- [Chart.js Documentation](https://www.chartjs.org/docs/)
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+---
+
+For questions or contributions, please open an issue or pull request.
