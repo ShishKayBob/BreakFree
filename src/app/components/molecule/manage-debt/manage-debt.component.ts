@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CardModule } from 'primeng/card';
 import { TableModule } from 'primeng/table';
 import Debt from '../../../types/debt';
@@ -14,8 +14,6 @@ import { Dialog } from 'primeng/dialog';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { FloatLabelModule } from 'primeng/floatlabel';
-import DebtInfo from '../../../types/debtInfo';
-import { cloneArray } from '../../../utils/arrayUtils';
 
 @Component({
   selector: 'manage-debt',

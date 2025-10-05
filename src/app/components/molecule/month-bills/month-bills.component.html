@@ -1,0 +1,51 @@
+<p-card header="Month" subheader="All of your debt in a managable list. Add, Remove, Edit, and Sort your debts for easy viewing.">
+    <p-table [value]="debts" [paginator]="true" [rows]="10">
+        <ng-template #header>
+            <tr>
+                <th>Name</th>
+                <th>Current Balance</th>
+                <th>Estimated Minimum</th>
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template #body let-debt let-index="rowIndex">
+            <tr>
+                <td>{{ debt.name }}</td>
+                <td>${{ debt.currentBalance }}</td>
+                <td>${{ debt.estMinPayment }}</td>
+                <td>
+                    <p-button icon="pi pi-plus" label="Make Payment" (click)="togglePaymentDialog(index)"></p-button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</p-card>
+
+<p-dialog header="Make Payment" [modal]="true" [(visible)]="paymentDialog" [style]="{ width: '25rem' }">
+    <span class="p-text-secondary">Please fill out all information.</span>
+    <form [formGroup]="paymentForm" (ngSubmit)="savePayment()">
+        <p class="label">Payment Amount</p>
+        <p-inputgroup class="inputGroup">
+            <p-inputgroup-addon>$</p-inputgroup-addon>
+            <p-inputnumber #balance formControlName="payment" mode="decimal"
+                [maxFractionDigits]="2"></p-inputnumber>
+        </p-inputgroup>
+
+        <p class="label">Late Payment</p>
+        <p-inputgroup class="inputGroup">
+            <p-checkbox formControlName="isLate" [binary]="true"></p-checkbox>
+        </p-inputgroup>
+
+        <p class="label">Updated Balance</p>
+        <p-inputgroup class="inputGroup">
+            <p-inputgroup-addon>$</p-inputgroup-addon>
+            <p-inputnumber #minPay formControlName="balance" mode="decimal"
+                [maxFractionDigits]="2"></p-inputnumber>
+        </p-inputgroup>
+
+        <div class="endRow">
+            <p-button label="Cancel" severity="secondary" (click)="togglePaymentDialog(null)" />
+            <p-button label="Create" type="submit" [disabled]="!paymentForm.valid"/>
+        </div>
+    </form>
+</p-dialog>

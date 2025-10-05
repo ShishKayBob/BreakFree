@@ -1,2 +1,13 @@
-<progress-report [debts]="debts"></progress-report>
-<outlook [debts]="debts" [strategy]="strategy" [repaymentOrder]="repaymentOrder" [allocation]="totalAllocation"></outlook>
+<ng-container *ngIf="missingDebtData().length > 0; else dashboardContent">
+  <div class="dashboard-warning">
+    <h3>Complete Your Debt Setup</h3>
+    <ul>
+      <li *ngFor="let item of missingDebtData()">{{ item }}</li>
+    </ul>
+    <a routerLink="/debt-center" class="dashboard-link">Go to Debt Center</a>
+  </div>
+</ng-container>
+<ng-template #dashboardContent>
+  <progress-report [debts]="debts"></progress-report>
+  <outlook [debts]="debts" [strategy]="strategy" [repaymentOrder]="repaymentOrder" [allocation]="totalAllocation"></outlook>
+</ng-template>
